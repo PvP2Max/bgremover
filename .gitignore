@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# Env/config
+.env
+.env.local
+
+# Large artifacts
+models/
+

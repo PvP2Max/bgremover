@@ -1,0 +1,11 @@
+boto3
+fastapi
+numpy
+opencv-python-headless
+pillow
+python-dotenv
+pydantic-settings
+requests
+torch
+torchvision
+uvicorn[standard]
