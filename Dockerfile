@@ -1,5 +1,6 @@
 # CUDA-enabled base for GPU inference
-FROM nvidia/cuda:12.1.0-cudnn9-runtime-ubuntu22.04
+# Using cudnn8 because cudnn9 tag is not published for CUDA 12.1 runtime.
+FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
