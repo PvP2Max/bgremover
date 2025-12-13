@@ -1,6 +1,5 @@
-# CUDA-enabled base for GPU inference
-# Using cudnn8 because cudnn9 tag is not published for CUDA 12.1 runtime.
-FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu22.04
+# CUDA-enabled base with PyTorch preinstalled to avoid re-downloading GPU wheels
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \

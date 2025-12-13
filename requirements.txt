@@ -6,6 +6,6 @@ pillow
 python-dotenv
 pydantic-settings
 requests
-torch
-torchvision
+torch==2.3.1
+torchvision==0.18.1
 uvicorn[standard]

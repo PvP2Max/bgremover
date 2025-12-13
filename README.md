@@ -42,13 +42,18 @@ Notes:
 ## Docker Build & Run
 ```bash
 docker build -t modnet-service:latest .
-docker run --gpus all --rm \
+docker run -d --name modnet-service --gpus all --rm \
   --net apps-net \  # Cloudflare tunnel network
   -p 8000:8000 \
   --env-file .env \
   -v /models:/models \
   modnet-service:latest
+# Follow logs when needed, then Ctrl+C to detach:
+docker logs -f modnet-service
 ```
+Notes:
+- Add `--restart unless-stopped` if you want it to auto-restart on reboot.
+- Run in attached mode (omit `-d`) only when you need foreground logs.
 
 ## API
 - Health: `GET /health` → `{"status": "ok"}`
@@ -71,6 +76,11 @@ This skips R2 and writes `output.png` locally for visual inspection.
 - TorchScript checkpoints load fastest (`torch.jit.save` from the official MODNet repo).
 - Plain `state_dict` checkpoints are also supported; unexpected/missing keys are logged.
 - The model is loaded once and cached on first request.
+
+## Build-speed tips
+- Base image now ships with PyTorch + CUDA (`pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime`) to skip downloading GPU wheels during build.
+- Pinning torch/torchvision in `requirements.txt` avoids upgrade checks that force re-downloads. Rebuilds will reuse cached layers as long as requirements don’t change.
+- If builds still feel slow, push the built image to your registry and pull it on the GPU host instead of rebuilding locally.
 
 ## Operational reminders
 - Keep this service running alongside the existing `withoutbg` until validation is complete.
